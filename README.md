@@ -1,6 +1,4 @@
-# PasswordGenerator
-
-Password Generator 
+# Password Generator 
 
 User inputs length of password and whether to include special characters.
 
