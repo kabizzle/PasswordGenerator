@@ -1,3 +1,5 @@
+#I wrote this program to automate the process of creating lists of characters for passwordGenerator.py
+
 char_str = "abcdefghijklmnopqrstuvwxyz"
 lower_char_list = []
 for i in char_str:
