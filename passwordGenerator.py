@@ -1,5 +1,6 @@
 import random
 
+#Function determines whether password contains special chars
 def has_special_chars(password, special_chars_list):
     has_special_chars = False
     for i in password:
