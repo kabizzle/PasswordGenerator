@@ -9,6 +9,7 @@ def has_special_chars(password, special_chars_list):
     return has_special_chars    
 
 
+#Function determines whether password contains a number
 def has_num(password, digits_list):
     has_num = False
     for i in password:
@@ -17,6 +18,7 @@ def has_num(password, digits_list):
     return has_num
 
 
+#Function determines whether password contains an uppercase letter
 def has_upper(password, upper_case_list):
     has_upper = False
     for i in password:
@@ -25,6 +27,7 @@ def has_upper(password, upper_case_list):
     return has_upper
 
 
+#Function determines whether password contains a lowercase letter
 def has_lower(password, lower_case_list):
     has_lower = False
     for i in password:
@@ -36,7 +39,7 @@ def has_lower(password, lower_case_list):
 def main():
     password_length = int(input("How long should the password be? \n"))
     special_input = int(input("Does the password require special characters? (@#$%=:?./|~>*()<) \nType 0 for no and 1 for yes \n"))
-    while special_input != 0 and special_input != 1:
+    while special_input != 0 and special_input != 1:  # ensures user inputs either a 0 or 1
         special_input = int(input("Invalid input! \nType 0 for no and 1 for yes \n"))
     special_chars = bool(special_input)
     password = ""
@@ -46,16 +49,19 @@ def main():
     digits_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     special_chars_list = ['@', '#', '$', '%', '=', ':', '?', '.', '/', '|', '~', '>', '*', '(', ')', '<']
 
+    #creates a list of all possible chars to iterate over
     if special_chars:
         chars_list = lower_case_list + upper_case_list + digits_list + special_chars_list
     else:
         chars_list = lower_case_list + upper_case_list + digits_list
 
+    #main loop - generates the password from list of all possible chars
     for i in range(password_length):
         char_index = random.randint(0, len(chars_list)-1)
         char = chars_list[char_index]
         password += char
 
+    #tests to determine whether password is strong
     has_special_char = has_special_chars(password, special_chars_list)
     
     has_digit = has_num(password, digits_list)
@@ -65,15 +71,17 @@ def main():
     has_lower_char = has_lower(password, lower_case_list)
     
     char_to_replace = -1
-
-    strong = special_chars and has_special_char and has_digit and has_upper_char and has_lower_char and len(password)>=8
-
-    while not strong:
-        if special_chars and not has_special_chars:
+    if special_chars and not has_special_char:
             char_index = random.randint(0, len(special_chars_list)-1)
             char = special_chars_list[char_index]
             password.replace(password[char_to_replace], char)
-        elif not has_num:
+            char_to_replace -= 1
+    
+    viable = has_special_char and has_digit and has_upper_char and has_lower_char
+
+    # loop ensures that password contains one of each type of char
+    while not viable:
+        if not has_num:
             char_index = random.randint(0, len(digits_list)-1)
             char = digits_list[char_index]
             password.replace(password[char_to_replace], char)      
@@ -88,9 +96,9 @@ def main():
         
         char_to_replace -= 1
 
-        strong = special_chars and has_special_chars and has_num and has_upper and has_lower and len(password) >=8
+        viable = has_num and has_upper and has_lower
 
-    if strong:
+    if viable and special_chars and has_special_char and len(password) >= 8:
         print(f"Your password is: {password} and it is strong.")
     else:
         print(f"Your password is {password}, but it is not very strong")
