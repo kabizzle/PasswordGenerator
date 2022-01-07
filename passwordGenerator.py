@@ -1,15 +1,6 @@
 import random
 
-
-def check_for_special_chars(password, special_chars_list):
-    for i in password:
-        if i in special_chars_list:
-            return True
-    else:
-        return False
-
-
-def main():
+def passwordGen():
     password_length = int(input("How long should the password be? \n"))
     special_input = int(input("Does the password require special characters? (@#$%=:?./|~>*()<) \nType 0 for no and 1 for yes \n"))
     while special_input != 0 and special_input != 1:
@@ -32,7 +23,12 @@ def main():
         char = chars_list[char_index]
         password += char
 
-    has_special_chars = check_for_special_chars(password, special_chars_list)
+    for i in password:
+        if i in special_chars_list:
+            has_special_chars = True
+    else:
+        has_special_chars = False
+
     if special_chars and not has_special_chars:
         char_index = random.randint(0, len(special_chars_list)-1)
         char = special_chars_list[char_index]
@@ -50,4 +46,4 @@ def main():
             print("Consider adding special characters to make your password stronger")
 
 
-main()
+passwordGen()
